@@ -34,7 +34,7 @@
         <div class="plus one" data-side="left" data-val="1" title="1点" role="button">+1</div>
         <div class="plus" data-side="left" data-val="2" title="2点" role="button">+2</div>
       </div>
-      <div class="small">ながおしでれんぞく</div>
+      <div class="small">クリック／タップで</div>
     </div>
 
     <div class="center">
@@ -58,7 +58,7 @@
         <div class="plus one" data-side="right" data-val="1" title="1点" role="button">+1</div>
         <div class="plus" data-side="right" data-val="2" title="2点" role="button">+2</div>
       </div>
-      <div class="small">ながおしでれんぞく</div>
+      <div class="small">クリック／タップで</div>
     </div>
   </div>
 
@@ -105,12 +105,9 @@
   function renderScores(){ leftScoreEl.textContent = state.left; rightScoreEl.textContent = state.right; totalEl.textContent = state.left + state.right; }
   renderScores();
 
-  // longpress
-  let holdInterval=null, holdTimeout=null;
-  function startHold(side,val){ addPoints(side,val); holdTimeout = setTimeout(()=>{ holdInterval = setInterval(()=> addPoints(side,val),120); },350); }
-  function stopHold(){ clearTimeout(holdTimeout); clearInterval(holdInterval); holdTimeout=null; holdInterval=null; }
+  // シンプルクリックのみ (ロングプレス機能を削除)
   function addPoints(side,val){ if(side==='left') state.left += Number(val); else state.right += Number(val); renderScores(); }
-  document.querySelectorAll('.plus').forEach(btn=>{ const side=btn.dataset.side; const val=Number(btn.dataset.val); btn.addEventListener('mousedown', ()=> startHold(side,val)); btn.addEventListener('touchstart',(e)=>{ e.preventDefault(); startHold(side,val)}); window.addEventListener('mouseup', stopHold); window.addEventListener('touchend', stopHold); btn.addEventListener('click',(e)=> e.stopPropagation()); });
+  document.querySelectorAll('.plus').forEach(btn=>{ const side=btn.dataset.side; const val=Number(btn.dataset.val); btn.addEventListener('click', ()=> addPoints(side,val)); });
 
   // keyboard shortcuts
   window.addEventListener('keydown',(e)=>{ if(e.key==='a') addPoints('left',1); if(e.key==='s') addPoints('left',2); if(e.key==='k') addPoints('right',1); if(e.key==='l') addPoints('right',2); });
@@ -134,7 +131,6 @@
 
   submitBtn.addEventListener('click', ()=>{
     // 指示: にゅうりょくかんりょう を押したら「画面内容をすべて消して」
-    // 実装: メイン UI を非表示にして、中央の「けっかひょうじ ボタン」のみを表示
     const main = document.querySelector('.wrap');
     main.style.display = 'none';
     confirmOverlay.style.display = 'flex'; confirmOverlay.setAttribute('aria-hidden','false');
