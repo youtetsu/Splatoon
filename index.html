@@ -3,142 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Splatoon風 リザルト - シンプル版</title>
+  <title>スプラ風 リザルト（改良版）</title>
   <style>
-    :root{
-      --blue:#0577ff;
-      --blue-acc:#39a7ff;
-      --orange:#ff7a00;
-      --orange-acc:#ff9a33;
-      --bg:#0b0b0e;
-      --card:#0f1720;
-      --glass: rgba(255,255,255,0.04);
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "メイリオ", "Noto Sans JP", sans-serif;
-      background: linear-gradient(180deg,#071021 0%, #05121a 100%);
-      color:#e6eef8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
-
-    .wrap{
-      width:980px;
-      max-width:98vw;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;
-      padding:18px;
-      box-shadow: 0 8px 40px rgba(2,6,23,0.6);
-      display:flex;
-      gap:18px;
-      align-items:flex-start;
-    }
-
-    .side{
-      width:220px;
-      min-width:180px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:12px;
-    }
-
-    .left{ border:4px solid rgba(255,122,0,0.08);}
-    .right{ border:4px solid rgba(5,119,255,0.08);}
-
-    .score{
-      font-size:48px;
-      font-weight:700;
-      letter-spacing:1px;
-      width:100%;
-      text-align:center;
-      padding:6px 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-      border-radius:8px;
-    }
-
-    .btns{
-      display:flex;
-      gap:10px;
-    }
-
-    .plus{
-      width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:700;cursor:pointer;
-      box-shadow:0 8px 30px rgba(2,6,23,0.5);
-      user-select:none;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .plus:active{ transform:scale(.96); }
-
-    .plus.one{ width:70px;height:70px;font-size:18px }
-
-    .left .plus{ background: linear-gradient(180deg,var(--orange),var(--orange-acc)); color:white}
-    .right .plus{ background: linear-gradient(180deg,var(--blue),var(--blue-acc)); color:white}
-
-    .center{
-      flex:1; display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 12px;
-    }
-
-    .controls{
-      display:flex;gap:12px;align-items:center;
-    }
-
-    .primary{
-      background: linear-gradient(90deg,var(--blue),var(--blue-acc));
-      color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(3,80,200,0.24);
-    }
-
-    .ghost{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.9);padding:8px 14px;border-radius:10px;cursor:pointer;
-    }
-
-    .result-overlay{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;z-index:60;
-      backdrop-filter: blur(6px);
-    }
-
-    .result-card{
-      width:920px;max-width:96vw;border-radius:16px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.35));box-shadow:0 30px 80px rgba(2,6,23,0.7);
-    }
-
-    .result-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .result-title h2{margin:0;font-size:20px}
-
-    .bar-wrap{margin-top:18px;background:linear-gradient(90deg,#07111a,#0b1622);padding:8px;border-radius:12px;position:relative;height:86px;overflow:hidden}
-
-    /* left and right fills: animate widths from 0 to target */
-    .fill-left, .fill-right{
-      position:absolute;top:0;bottom:0;width:0%;transition: width 1600ms cubic-bezier(.2,.9,.2,1);
-      display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:20px;text-shadow:0 2px 8px rgba(0,0,0,.6);
-    }
+    :root{--blue:#0577ff;--blue-acc:#39a7ff;--orange:#ff7a00;--orange-acc:#ff9a33;--bg:#0b0b0e;--card:#0f1720}
+    @font-face{font-family:'SplatoonLike';src: url('https://frozenpandaman.github.io/Splatoon1.otf') format('opentype');font-weight:normal;font-style:normal;font-display:swap}
+    html,body{height:100%}body{margin:0;font-family:'SplatoonLike',"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Meiryo",sans-serif;background:linear-gradient(180deg,#071021 0%, #05121a 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{width:980px;max-width:98vw;border-radius:14px;padding:18px;display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));box-shadow:0 8px 40px rgba(2,6,23,0.6)}
+    .side{width:220px;min-width:160px;border-radius:12px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
+    .left{border:4px solid rgba(255,122,0,0.08)}.right{border:4px solid rgba(5,119,255,0.08)}.score{font-size:48px;font-weight:800;width:100%;text-align:center;padding:6px 0;border-radius:8px}
+    .btns{display:flex;gap:10px}.plus{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;cursor:pointer;user-select:none;transition:transform .12s ease}.plus.one{width:70px;height:70px;font-size:18px}.left .plus{background:linear-gradient(180deg,var(--orange),var(--orange-acc));color:#fff}.right .plus{background:linear-gradient(180deg,var(--blue),var(--blue-acc));color:#fff}
+    .center{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 12px}.controls{display:flex;gap:12px;align-items:center}
+    .primary{background:linear-gradient(90deg,var(--blue),var(--blue-acc));color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.95);padding:8px 14px;border-radius:10px;cursor:pointer}
+    .result-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;z-index:60;backdrop-filter:blur(6px)}.result-card{width:920px;max-width:96vw;border-radius:16px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.45));box-shadow:0 30px 80px rgba(2,6,23,0.7)}.result-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.result-title h2{margin:0;font-size:20px}
+    .bar-wrap{margin-top:18px;background:linear-gradient(90deg,#07111a,#0b1622);padding:8px;border-radius:12px;position:relative;height:120px;overflow:hidden}
+    /* revert: 元のアニメーション（短め） */
+    .fill-left,.fill-right{position:absolute;top:0;bottom:0;width:0%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:26px;text-shadow:0 2px 8px rgba(0,0,0,0.6);transition:width 1600ms cubic-bezier(.2,.9,.2,1)}
     .fill-left{left:0;border-top-left-radius:8px;border-bottom-left-radius:8px;background:linear-gradient(90deg,var(--orange),var(--orange-acc));transform-origin:left center}
     .fill-right{right:0;border-top-right-radius:8px;border-bottom-right-radius:8px;background:linear-gradient(270deg,var(--blue),var(--blue-acc));transform-origin:right center}
-
-    .bar-center{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:10
-    }
-
-    .pct{font-size:40px;font-weight:900}
-    .small{font-size:12px;opacity:.9}
-
-    .meta{display:flex;gap:12px;align-items:center;margin-top:12px}
-
-    /* small helper controls */
-    .hint{font-size:12px;color:rgba(255,255,255,0.7)}
-
-    /* responsive */
-    @media (max-width:900px){
-      .wrap{flex-direction:column;align-items:stretch}
-      .side{width:100%;flex-direction:row;justify-content:space-between;padding:12px}
-      .center{order:3}
-    }
+    .edge-pct{position:absolute;top:50%;transform:translateY(-50%);font-size:56px;font-weight:900;letter-spacing:2px;text-shadow:0 4px 16px rgba(0,0,0,0.6)}.edge-pct.left{left:12px;color:rgba(255,255,255,0.95)}.edge-pct.right{right:12px;color:rgba(255,255,255,0.95)}
+    .confirm-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:70;pointer-events:none}.confirm-panel{pointer-events:auto;background:transparent;border:none;padding:20px;border-radius:12px}.confirm-btn{font-family:'SplatoonLike',inherit;background:transparent;border:2px solid rgba(255,255,255,0.08);padding:20px 34px;border-radius:50px;font-size:22px;font-weight:900;cursor:pointer;color:white}
+    .meta{margin-top:12px;display:flex;gap:12px;align-items:center}.meta .small{font-size:13px;color:rgba(255,255,255,0.85)}
+    @media (max-width:900px){.wrap{flex-direction:column;align-items:stretch}.side{width:100%;flex-direction:row;justify-content:space-between;padding:12px}.center{order:3}}
   </style>
 </head>
 <body>
@@ -149,22 +34,22 @@
         <div class="plus one" data-side="left" data-val="1" title="1点" role="button">+1</div>
         <div class="plus" data-side="left" data-val="2" title="2点" role="button">+2</div>
       </div>
-      <div class="hint">長押しで連続加算</div>
+      <div class="small">ながおしでれんぞく</div>
     </div>
 
     <div class="center">
       <div style="text-align:center;">
-        <h1 style="margin:0;font-size:18px">スコア入力</h1>
-        <div class="small">左右のチームのスコアを増やして「入力完了」を押すとリザルトを表示します</div>
+        <h1 style="margin:0;font-size:18px">スコアにゅうりょく</h1>
+        <div class="small">チームのてんすうをふやしてください</div>
       </div>
 
       <div class="controls">
-        <button class="primary" id="submitBtn">入力完了</button>
+        <button class="primary" id="submitBtn">にゅうりょくかんりょう</button>
         <button class="ghost" id="resetBtn">リセット</button>
-        <button class="ghost" id="swapBtn">左右入れ替え</button>
+        <button class="ghost" id="swapBtn">ひだりみぎ いれかえ</button>
       </div>
 
-      <div style="margin-top:14px;text-align:center;opacity:.95">総合: <span id="total">0</span> 点</div>
+      <div style="margin-top:14px;text-align:center;opacity:.95">そうごう: <span id="total">0</span> てん</div>
     </div>
 
     <div class="side right" id="rightSide">
@@ -173,7 +58,14 @@
         <div class="plus one" data-side="right" data-val="1" title="1点" role="button">+1</div>
         <div class="plus" data-side="right" data-val="2" title="2点" role="button">+2</div>
       </div>
-      <div class="hint">長押しで連続加算</div>
+      <div class="small">ながおしでれんぞく</div>
+    </div>
+  </div>
+
+  <!-- 中間：結果表示ボタン（背景なし） -->
+  <div class="confirm-overlay" id="confirmOverlay" aria-hidden="true">
+    <div class="confirm-panel">
+      <button class="confirm-btn" id="showConfirm">けっかひょうじ</button>
     </div>
   </div>
 
@@ -183,176 +75,116 @@
       <div class="result-title">
         <h2>リザルト</h2>
         <div style="display:flex;gap:8px;align-items:center">
-          <button class="ghost" id="closeResult">閉じる</button>
+          <button class="ghost" id="closeResult">とじる</button>
           <button class="ghost" id="resetFromResult">リセット</button>
         </div>
       </div>
 
       <div class="bar-wrap" id="barWrap">
-        <div class="fill-left" id="fillLeft">0%</div>
-        <div class="fill-right" id="fillRight">0%</div>
-        <div class="bar-center">
-          <div style="display:flex;gap:20px;align-items:center;">
-            <div style="text-align:center;"><div class="small">ORANGE</div><div class="pct" id="leftPct">0%</div></div>
-            <div style="text-align:center;"><div class="small">BLUE</div><div class="pct" id="rightPct">0%</div></div>
-          </div>
-        </div>
+        <div class="fill-left" id="fillLeft"></div>
+        <div class="fill-right" id="fillRight"></div>
+
+        <!-- 大きい％表示（左右の端） -->
+        <div class="edge-pct left" id="edgeLeft">0%</div>
+        <div class="edge-pct right" id="edgeRight">0%</div>
       </div>
 
       <div class="meta">
-        <div class="small">最終スコア — オレンジ: <strong id="finalLeft">0</strong> 点</div>
-        <div class="small">青: <strong id="finalRight">0</strong> 点</div>
+        <div class="small">おれんじ: <strong id="finalLeft">0</strong> てん</div>
+        <div class="small">ぶるー: <strong id="finalRight">0</strong> てん</div>
       </div>
     </div>
   </div>
 
 <script>
-  // basic state
+  // state
   const state = { left:0, right:0 };
   const leftScoreEl = document.getElementById('leftScore');
   const rightScoreEl = document.getElementById('rightScore');
   const totalEl = document.getElementById('total');
-
-  function renderScores(){
-    leftScoreEl.textContent = state.left;
-    rightScoreEl.textContent = state.right;
-    totalEl.textContent = state.left + state.right;
-  }
+  function renderScores(){ leftScoreEl.textContent = state.left; rightScoreEl.textContent = state.right; totalEl.textContent = state.left + state.right; }
   renderScores();
 
-  // click & longpress behaviour
-  let holdInterval = null;
-  let holdTimeout = null;
-
-  function startHold(el, side, val){
-    // immediate single increment
-    addPoints(side, val);
-    // after 350ms start repeating
-    holdTimeout = setTimeout(()=>{
-      holdInterval = setInterval(()=> addPoints(side, val), 120);
-    }, 350);
-  }
-  function stopHold(){
-    clearTimeout(holdTimeout); clearInterval(holdInterval); holdTimeout = null; holdInterval = null;
-  }
-
-  function addPoints(side, val){
-    if(side === 'left') state.left += Number(val);
-    else state.right += Number(val);
-    renderScores();
-  }
-
-  // wire buttons
-  document.querySelectorAll('.plus').forEach(btn => {
-    const side = btn.dataset.side;
-    const val = Number(btn.dataset.val);
-    btn.addEventListener('mousedown', (e)=> startHold(btn, side, val));
-    btn.addEventListener('touchstart', (e)=> { e.preventDefault(); startHold(btn, side, val); });
-    window.addEventListener('mouseup', stopHold);
-    window.addEventListener('touchend', stopHold);
-    btn.addEventListener('click',(e)=>{
-      // click already triggers startHold; prevent double-run on mouse down
-      e.stopPropagation();
-    });
-  });
+  // longpress
+  let holdInterval=null, holdTimeout=null;
+  function startHold(side,val){ addPoints(side,val); holdTimeout = setTimeout(()=>{ holdInterval = setInterval(()=> addPoints(side,val),120); },350); }
+  function stopHold(){ clearTimeout(holdTimeout); clearInterval(holdInterval); holdTimeout=null; holdInterval=null; }
+  function addPoints(side,val){ if(side==='left') state.left += Number(val); else state.right += Number(val); renderScores(); }
+  document.querySelectorAll('.plus').forEach(btn=>{ const side=btn.dataset.side; const val=Number(btn.dataset.val); btn.addEventListener('mousedown', ()=> startHold(side,val)); btn.addEventListener('touchstart',(e)=>{ e.preventDefault(); startHold(side,val)}); window.addEventListener('mouseup', stopHold); window.addEventListener('touchend', stopHold); btn.addEventListener('click',(e)=> e.stopPropagation()); });
 
   // keyboard shortcuts
-  window.addEventListener('keydown', (e)=>{
-    if(e.key === 'a') addPoints('left',1); // a: left +1
-    if(e.key === 's') addPoints('left',2); // s: left +2
-    if(e.key === 'k') addPoints('right',1);// k: right +1
-    if(e.key === 'l') addPoints('right',2);// l: right +2
-  });
+  window.addEventListener('keydown',(e)=>{ if(e.key==='a') addPoints('left',1); if(e.key==='s') addPoints('left',2); if(e.key==='k') addPoints('right',1); if(e.key==='l') addPoints('right',2); });
 
   // reset and swap
-  document.getElementById('resetBtn').addEventListener('click', ()=>{ state.left=0; state.right=0; renderScores(); });
+  document.getElementById('resetBtn').addEventListener('click', ()=>{ state.left=0; state.right=0; renderScores(); document.querySelector('.wrap').style.display = ''; });
   document.getElementById('swapBtn').addEventListener('click', ()=>{ [state.left,state.right] = [state.right,state.left]; renderScores(); });
 
-  // result handling
-  const overlay = document.getElementById('resultOverlay');
+  // result flow: 入力完了 -> 中間（結果表示ボタン） -> リザルト
   const submitBtn = document.getElementById('submitBtn');
-  const closeResult = document.getElementById('closeResult');
-  const resetFromResult = document.getElementById('resetFromResult');
-
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  const showConfirm = document.getElementById('showConfirm');
+  const overlay = document.getElementById('resultOverlay');
   const fillLeft = document.getElementById('fillLeft');
   const fillRight = document.getElementById('fillRight');
-  const leftPctEl = document.getElementById('leftPct');
-  const rightPctEl = document.getElementById('rightPct');
+  const barWrap = document.getElementById('barWrap');
+  const edgeLeft = document.getElementById('edgeLeft');
+  const edgeRight = document.getElementById('edgeRight');
   const finalLeft = document.getElementById('finalLeft');
   const finalRight = document.getElementById('finalRight');
 
-  function openResult(){
-    const L = state.left, R = state.right;
-    const total = L+R;
-    overlay.style.display = 'flex'; overlay.setAttribute('aria-hidden','false');
+  submitBtn.addEventListener('click', ()=>{
+    // 指示: にゅうりょくかんりょう を押したら「画面内容をすべて消して」
+    // 実装: メイン UI を非表示にして、中央の「けっかひょうじ ボタン」のみを表示
+    const main = document.querySelector('.wrap');
+    main.style.display = 'none';
+    confirmOverlay.style.display = 'flex'; confirmOverlay.setAttribute('aria-hidden','false');
 
-    // set final numbers
+    // ESC でキャンセル（オプション）
+    const onEsc = (e)=>{ if(e.key==='Escape'){ confirmOverlay.style.display='none'; confirmOverlay.setAttribute('aria-hidden','true'); main.style.display = ''; window.removeEventListener('keydown', onEsc); }};
+    window.addEventListener('keydown', onEsc);
+  });
+
+  showConfirm.addEventListener('click', ()=>{
+    confirmOverlay.style.display='none'; confirmOverlay.setAttribute('aria-hidden','true');
+    openResultAnimation();
+  });
+
+  function openResultAnimation(){
+    const L = state.left, R = state.right; const total = L+R;
+    overlay.style.display = 'flex'; overlay.setAttribute('aria-hidden','false');
     finalLeft.textContent = L; finalRight.textContent = R;
 
     if(total === 0){
-      // nothing scored -> show neutral 50/50 but with subdued style
-      leftPct = rightPct = 50;
-      setFill(50,50,true);
-      leftPctEl.textContent = '—'; rightPctEl.textContent = '—';
-      fillLeft.textContent = '';
-      fillRight.textContent = '';
+      setFill(50,50);
+      edgeLeft.textContent = 'ー'; edgeRight.textContent = 'ー';
     } else {
       const leftPct = Math.round((L/total)*100);
-      const rightPct = 100 - leftPct; // ensure sum 100
-      leftPctEl.textContent = leftPct + '%';
-      rightPctEl.textContent = rightPct + '%';
-      // set text inside fills for accessibility
-      fillLeft.textContent = leftPct + '%';
-      fillRight.textContent = rightPct + '%';
-      // animate from edges
-      setFill(leftPct,rightPct,false);
+      const rightPct = 100 - leftPct;
+      edgeLeft.textContent = leftPct + '%'; edgeRight.textContent = rightPct + '%';
+      setFill(leftPct,rightPct);
     }
   }
 
-  function setFill(lPct, rPct, neutral){
-    // reset widths to 0 then wait a tick so transition works
-    fillLeft.style.width = '0%';
-    fillRight.style.width = '0%';
-    if(neutral){
-      // neutral animation: both grow to 50
-      requestAnimationFrame(()=>{
-        setTimeout(()=>{
-          fillLeft.style.width = '50%';
-          fillRight.style.width = '50%';
-        },60);
-      });
-    } else {
-      requestAnimationFrame(()=>{
-        setTimeout(()=>{
-          fillLeft.style.width = lPct + '%';
-          fillRight.style.width = rPct + '%';
-        },60);
-      });
-    }
+  // シンプルなアニメーション: 幅を0から一気に最終値へ（約1.6s, 元の動き）
+  function setFill(lPct, rPct){
+    fillLeft.style.transition = 'width 1600ms cubic-bezier(.2,.9,.2,1)';
+    fillRight.style.transition = 'width 1600ms cubic-bezier(.2,.9,.2,1)';
+    fillLeft.style.width = '0%'; fillRight.style.width = '0%';
+    requestAnimationFrame(()=> setTimeout(()=>{ fillLeft.style.width = lPct + '%'; fillRight.style.width = rPct + '%'; }, 30));
   }
 
-  submitBtn.addEventListener('click', openResult);
-  closeResult.addEventListener('click', ()=>{ overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); });
-  resetFromResult.addEventListener('click', ()=>{ state.left=0; state.right=0; renderScores(); overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); });
+  // close/reset handlers
+  document.getElementById('closeResult').addEventListener('click', ()=>{ overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); document.querySelector('.wrap').style.display = ''; });
+  document.getElementById('resetFromResult').addEventListener('click', ()=>{ state.left=0; state.right=0; renderScores(); overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); document.querySelector('.wrap').style.display = ''; });
 
-  // click outside to close
-  overlay.addEventListener('click',(e)=>{ if(e.target === overlay) { overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); } });
+  // close when clicking outside
+  overlay.addEventListener('click',(e)=>{ if(e.target === overlay) { overlay.style.display='none'; overlay.setAttribute('aria-hidden','true'); document.querySelector('.wrap').style.display = ''; } });
 
-  // small usability tip on load
-  window.addEventListener('load', ()=>{
-    // brief pulse to hint where to press
-    animateHint();
-  });
-  function animateHint(){
-    const els = document.querySelectorAll('.plus');
-    els.forEach((el,i)=>{
-      setTimeout(()=>{ el.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:700,iterations:1}); }, i*80);
-    });
-  }
+  // hint animation
+  window.addEventListener('load', ()=>{ animateHint(); });
+  function animateHint(){ const els = document.querySelectorAll('.plus'); els.forEach((el,i)=>{ setTimeout(()=>{ el.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:700,iterations:1}); }, i*80); }); }
 
-  // expose helpers for dev console
   window._SCORE = state;
-
 </script>
 </body>
 </html>
