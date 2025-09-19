@@ -5,24 +5,92 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>スプラ風 リザルト（改良版）</title>
   <style>
-    :root{--blue:#0577ff;--blue-acc:#39a7ff;--orange:#ff7a00;--orange-acc:#ff9a33;--bg:#0b0b0e;--card:#0f1720}
-    @font-face{font-family:'SplatoonLike';src: url('https://frozenpandaman.github.io/Splatoon1.otf') format('opentype');font-weight:normal;font-style:normal;font-display:swap}
-    html,body{height:100%}body{margin:0;font-family:'SplatoonLike',"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Meiryo",sans-serif;background:linear-gradient(180deg,#071021 0%, #05121a 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center;padding:24px}
-    .wrap{width:980px;max-width:98vw;border-radius:14px;padding:18px;display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));box-shadow:0 8px 40px rgba(2,6,23,0.6)}
+    :root{
+      --blue:#0577ff;
+      --blue-acc:#39a7ff;
+      --orange:#ff7a00;
+      --orange-acc:#ff9a33;
+      --bg:#0b0b0e;
+      --card:#0f1720;
+    }
+
+    /* スプラ風フォント（差し替え可） */
+    @font-face{
+      font-family: 'SplatoonLike';
+      src: url('https://frozenpandaman.github.io/Splatoon1.otf') format('opentype');
+      font-weight: normal; font-style: normal; font-display: swap;
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: 'SplatoonLike', "Noto Sans JP", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: linear-gradient(180deg,#071021 0%, #05121a 100%);
+      color:#e6eef8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .wrap{
+      width:980px;max-width:98vw;border-radius:14px;padding:18px;display:flex;gap:18px;align-items:flex-start;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));box-shadow:0 8px 40px rgba(2,6,23,0.6);
+    }
+
     .side{width:220px;min-width:160px;border-radius:12px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
-    .left{border:4px solid rgba(255,122,0,0.08)}.right{border:4px solid rgba(5,119,255,0.08)}.score{font-size:48px;font-weight:800;width:100%;text-align:center;padding:6px 0;border-radius:8px}
-    .btns{display:flex;gap:10px}.plus{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;cursor:pointer;user-select:none;transition:transform .12s ease}.plus.one{width:70px;height:70px;font-size:18px}.left .plus{background:linear-gradient(180deg,var(--orange),var(--orange-acc));color:#fff}.right .plus{background:linear-gradient(180deg,var(--blue),var(--blue-acc));color:#fff}
-    .center{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 12px}.controls{display:flex;gap:12px;align-items:center}
-    .primary{background:linear-gradient(90deg,var(--blue),var(--blue-acc));color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:800;cursor:pointer}.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.95);padding:8px 14px;border-radius:10px;cursor:pointer}
-    .result-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;z-index:60;backdrop-filter:blur(6px)}.result-card{width:920px;max-width:96vw;border-radius:16px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.45));box-shadow:0 30px 80px rgba(2,6,23,0.7)}.result-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.result-title h2{margin:0;font-size:20px}
-    .bar-wrap{margin-top:18px;background:linear-gradient(90deg,#07111a,#0b1622);padding:8px;border-radius:12px;position:relative;height:120px;overflow:hidden}
-    /* revert: 元のアニメーション（短め） */
+    .left{border:4px solid rgba(255,122,0,0.08)}
+    .right{border:4px solid rgba(5,119,255,0.08)}
+    .score{font-size:48px;font-weight:800;width:100%;text-align:center;padding:6px 0;border-radius:8px}
+
+    .btns{display:flex;gap:10px}
+    .plus{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:800;cursor:pointer;user-select:none;transition:transform .12s ease}
+    .plus.one{width:70px;height:70px;font-size:18px}
+    .left .plus{background:linear-gradient(180deg,var(--orange),var(--orange-acc));color:#fff}
+    .right .plus{background:linear-gradient(180deg,var(--blue),var(--blue-acc));color:#fff}
+
+    .center{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;padding:8px 12px}
+    .controls{display:flex;gap:12px;align-items:center}
+    .primary{background:linear-gradient(90deg,var(--blue),var(--blue-acc));color:white;padding:10px 18px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.95);padding:8px 14px;border-radius:10px;cursor:pointer}
+
+    .result-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;z-index:60;backdrop-filter:blur(6px)}
+    .result-card{width:920px;max-width:96vw;border-radius:16px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.45));box-shadow:0 30px 80px rgba(2,6,23,0.7)}
+    .result-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .result-title h2{margin:0;font-size:20px}
+
+    .bar-wrap{margin-top:18px;background:linear-gradient(90deg,#07111a,#0b1622);padding:8px;border-radius:12px;position:relative;height:120px;overflow:visible}
+
+    /* fills */
     .fill-left,.fill-right{position:absolute;top:0;bottom:0;width:0%;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:26px;text-shadow:0 2px 8px rgba(0,0,0,0.6);transition:width 1600ms cubic-bezier(.2,.9,.2,1)}
     .fill-left{left:0;border-top-left-radius:8px;border-bottom-left-radius:8px;background:linear-gradient(90deg,var(--orange),var(--orange-acc));transform-origin:left center}
     .fill-right{right:0;border-top-right-radius:8px;border-bottom-right-radius:8px;background:linear-gradient(270deg,var(--blue),var(--blue-acc));transform-origin:right center}
-    .edge-pct{position:absolute;top:50%;transform:translateY(-50%);font-size:56px;font-weight:900;letter-spacing:2px;text-shadow:0 4px 16px rgba(0,0,0,0.6)}.edge-pct.left{left:12px;color:rgba(255,255,255,0.95)}.edge-pct.right{right:12px;color:rgba(255,255,255,0.95)}
-    .confirm-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:70;pointer-events:none}.confirm-panel{pointer-events:auto;background:transparent;border:none;padding:20px;border-radius:12px}.confirm-btn{font-family:'SplatoonLike',inherit;background:transparent;border:2px solid rgba(255,255,255,0.08);padding:20px 34px;border-radius:50px;font-size:22px;font-weight:900;cursor:pointer;color:white}
-    .meta{margin-top:12px;display:flex;gap:12px;align-items:center}.meta .small{font-size:13px;color:rgba(255,255,255,0.85)}
+
+    /* large percent on edges */
+    .edge-pct{position:absolute;top:50%;transform:translateY(-50%);font-size:56px;font-weight:900;letter-spacing:2px;text-shadow:0 4px 16px rgba(0,0,0,0.6)}
+    .edge-pct.left{left:12px;color:rgba(255,255,255,0.95)}
+    .edge-pct.right{right:12px;color:rgba(255,255,255,0.95)}
+
+    /* icons placed above bar ends */
+    .icon{position:absolute;top:-110px;width:72px;height:72px;display:flex;align-items:center;justify-content:center}
+    .icon-left{left:8px}
+    .icon-right{right:8px}
+    .icon img{width:100%;height:100%;display:block;object-fit:contain}
+
+    /* winner animation */
+    @keyframes pop {
+      0%{transform:translateY(0) scale(0.9)}
+      50%{transform:translateY(-6px) scale(1.12)}
+      100%{transform:translateY(0) scale(1)}
+    }
+    .win{animation: pop 540ms cubic-bezier(.2,.9,.2,1)}
+    .lose{opacity:.5;transform:scale(.92)}
+
+    .confirm-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:70;pointer-events:none}
+    .confirm-panel{pointer-events:auto;background:transparent;border:none;padding:20px;border-radius:12px}
+    .confirm-btn{font-family:'SplatoonLike',inherit;background:transparent;border:2px solid rgba(255,255,255,0.08);padding:20px 34px;border-radius:50px;font-size:22px;font-weight:900;cursor:pointer;color:white}
+    .meta{margin-top:12px;display:flex;gap:12px;align-items:center}
+    .meta .small{font-size:13px;color:rgba(255,255,255,0.85)}
+
     @media (max-width:900px){.wrap{flex-direction:column;align-items:stretch}.side{width:100%;flex-direction:row;justify-content:space-between;padding:12px}.center{order:3}}
   </style>
 </head>
@@ -81,6 +149,9 @@
       </div>
 
       <div class="bar-wrap" id="barWrap">
+        <div class="icon icon-left" id="iconLeft" aria-hidden="true"></div>
+        <div class="icon icon-right" id="iconRight" aria-hidden="true"></div>
+
         <div class="fill-left" id="fillLeft"></div>
         <div class="fill-right" id="fillRight"></div>
 
@@ -105,16 +176,50 @@
   function renderScores(){ leftScoreEl.textContent = state.left; rightScoreEl.textContent = state.right; totalEl.textContent = state.left + state.right; }
   renderScores();
 
-  // シンプルクリックのみ (ロングプレス機能を削除)
+  // click only
   function addPoints(side,val){ if(side==='left') state.left += Number(val); else state.right += Number(val); renderScores(); }
   document.querySelectorAll('.plus').forEach(btn=>{ const side=btn.dataset.side; const val=Number(btn.dataset.val); btn.addEventListener('click', ()=> addPoints(side,val)); });
 
-  // keyboard shortcuts
+  // keyboard
   window.addEventListener('keydown',(e)=>{ if(e.key==='a') addPoints('left',1); if(e.key==='s') addPoints('left',2); if(e.key==='k') addPoints('right',1); if(e.key==='l') addPoints('right',2); });
 
   // reset and swap
   document.getElementById('resetBtn').addEventListener('click', ()=>{ state.left=0; state.right=0; renderScores(); document.querySelector('.wrap').style.display = ''; });
   document.getElementById('swapBtn').addEventListener('click', ()=>{ [state.left,state.right] = [state.right,state.left]; renderScores(); });
+
+  // icons: external-image URLs (placeholder images used; you can replace these URLs later)
+  const imgUrls = {
+    neutralLeft: 'https://via.placeholder.com/72/ffb070/ffffff?text=O',
+    neutralRight: 'https://via.placeholder.com/72/70baff/ffffff?text=B',
+    blueWinLeft: 'https://via.placeholder.com/72/e08b6a/ffffff?text=X',
+    blueWinRight: 'https://via.placeholder.com/72/0577ff/ffffff?text=C',
+    orangeWinLeft: 'https://via.placeholder.com/72/ff7a00/ffffff?text=C',
+    orangeWinRight: 'https://via.placeholder.com/72/92c9ff/ffffff?text=X'
+  };
+
+  const iconLeft = document.getElementById('iconLeft');
+  const iconRight = document.getElementById('iconRight');
+
+  // pattern: 0 = neutral (during animation), 1 = blue wins, 2 = orange wins
+  function setIconsPattern(pattern){
+    iconLeft.classList.remove('win','lose');
+    iconRight.classList.remove('win','lose');
+
+    if(pattern === 0){
+      iconLeft.innerHTML = `<img src="${imgUrls.neutralLeft}" alt="おれんじ" />`;
+      iconRight.innerHTML = `<img src="${imgUrls.neutralRight}" alt="ぶるー" />`;
+    } else if(pattern === 1){
+      iconLeft.innerHTML = `<img src="${imgUrls.blueWinLeft}" alt="lose" />`;
+      iconRight.innerHTML = `<img src="${imgUrls.blueWinRight}" alt="win" />`;
+      iconRight.classList.add('win');
+      iconLeft.classList.add('lose');
+    } else if(pattern === 2){
+      iconLeft.innerHTML = `<img src="${imgUrls.orangeWinLeft}" alt="win" />`;
+      iconRight.innerHTML = `<img src="${imgUrls.orangeWinRight}" alt="lose" />`;
+      iconLeft.classList.add('win');
+      iconRight.classList.add('lose');
+    }
+  }
 
   // result flow: 入力完了 -> 中間（結果表示ボタン） -> リザルト
   const submitBtn = document.getElementById('submitBtn');
@@ -123,19 +228,15 @@
   const overlay = document.getElementById('resultOverlay');
   const fillLeft = document.getElementById('fillLeft');
   const fillRight = document.getElementById('fillRight');
-  const barWrap = document.getElementById('barWrap');
   const edgeLeft = document.getElementById('edgeLeft');
   const edgeRight = document.getElementById('edgeRight');
   const finalLeft = document.getElementById('finalLeft');
   const finalRight = document.getElementById('finalRight');
 
   submitBtn.addEventListener('click', ()=>{
-    // 指示: にゅうりょくかんりょう を押したら「画面内容をすべて消して」
     const main = document.querySelector('.wrap');
     main.style.display = 'none';
     confirmOverlay.style.display = 'flex'; confirmOverlay.setAttribute('aria-hidden','false');
-
-    // ESC でキャンセル（オプション）
     const onEsc = (e)=>{ if(e.key==='Escape'){ confirmOverlay.style.display='none'; confirmOverlay.setAttribute('aria-hidden','true'); main.style.display = ''; window.removeEventListener('keydown', onEsc); }};
     window.addEventListener('keydown', onEsc);
   });
@@ -150,18 +251,30 @@
     overlay.style.display = 'flex'; overlay.setAttribute('aria-hidden','false');
     finalLeft.textContent = L; finalRight.textContent = R;
 
+    // 1) 最初：アイコンはアニメーション前モード
+    setIconsPattern(0);
+
     if(total === 0){
       setFill(50,50);
       edgeLeft.textContent = 'ー'; edgeRight.textContent = 'ー';
+      // after animation, leave neutral (tie)
+      setTimeout(()=> setIconsPattern(0), 1700);
     } else {
       const leftPct = Math.round((L/total)*100);
       const rightPct = 100 - leftPct;
       edgeLeft.textContent = leftPct + '%'; edgeRight.textContent = rightPct + '%';
       setFill(leftPct,rightPct);
+
+      // after the 1.6s animation, update icons to winner/loser
+      setTimeout(()=>{
+        if(rightPct > leftPct){ setIconsPattern(1); }
+        else if(leftPct > rightPct){ setIconsPattern(2); }
+        else { setIconsPattern(0); }
+      }, 1650);
     }
   }
 
-  // シンプルなアニメーション: 幅を0から一気に最終値へ（約1.6s, 元の動き）
+  // setFill: 幅を0から一気に最終値へ（約1.6s）
   function setFill(lPct, rPct){
     fillLeft.style.transition = 'width 1600ms cubic-bezier(.2,.9,.2,1)';
     fillRight.style.transition = 'width 1600ms cubic-bezier(.2,.9,.2,1)';
